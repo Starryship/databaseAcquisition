@@ -105,7 +105,7 @@ const isAdmin = computed(() => adminStore.isAdmin)
 .back {
   width: 100vw;
   height: 100vh;
-  background-color: rgb(71, 25, 48); /* 背景颜色 */
+  background-color: rgb(91,37,40); /* 背景颜色 */
   overflow-y: auto; /* 如果内容超出，允许垂直滚动 */
 }
 

@@ -13,9 +13,9 @@
     <router-view></router-view>
 
 
-    <button @click="toggleAdminMode" class="admin-toggle-button">
+    <!-- <button @click="toggleAdminMode" class="admin-toggle-button">
     {{ isAdmin ? '退出管理员模式' : '进入管理员模式' }}
-  </button>
+  </button> -->
 
 
 
@@ -53,8 +53,8 @@
   </div>
   <div class="tooltip-content">
     <div class="social-icons">
-      <a href="#" class="social-icon twitter">
-        <svg
+      <a @click="toggleAdminMode" class="social-icon fix">
+        <!-- <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           width="24"
@@ -63,10 +63,18 @@
           <path
             d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"
           ></path>
-        </svg>
+        </svg> -->
+
+
+        <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <path d="M19.14 12.94l1.42-1.42c.2-.2.26-.51.19-.77l-1.27-3.88c.06-.35-.07-.71-.33-.92L16.18 3.95c-.23-.26-.56-.38-.89-.33l-3.88 1.27c-.27-.1-.58-.11-.86-.03l-1.44-2.11a.75.75 0 0 0-.9-.26l-2.66 1.55c-.34.19-.46.59-.32.92l1.27 3.88c-.07.35.07.71.33.92l3.62 3.62a3.99 3.99 0 0 0-.01 1.49l-3.62 3.62c-.26.23-.39.58-.33.92l1.27 3.88c-.14.34-.02.71.19.77l1.42 1.42c.2.2.51.26.77.19l3.88-1.27c.27.1.57.11.86.03l1.44 2.11a.75.75 0 0 0 .9.26l2.66-1.55c.34-.19.46-.59.32-.92l-1.27-3.88c.07-.35-.07-.71-.33-.92l-3.62-3.62c-.19-.19-.44-.34-.72-.44zM12 15c-1.38 0-2.5-1.12-2.5-2.5S10.62 10 12 10s2.5 1.12 2.5 2.5S13.38 15 12 15z"/>
+</svg>
+
+
+
       </a>
-      <a href="#" class="social-icon facebook">
-        <svg
+      <a href="#" class="social-icon add">
+        <!-- <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           width="24"
@@ -75,7 +83,15 @@
           <path
             d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
           ></path>
-        </svg>
+        </svg> -->
+
+
+        <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <path d="M19 13H5v-2h14v2zM12 5v14h-2V5h2z"/>
+</svg>
+
+
+
       </a>
       <a href="#" class="social-icon linkedin">
         <svg
@@ -105,14 +121,14 @@
     import { useAdminStore } from '@/stores/useAdminStore'; // 引入 Pinia store
 
 // import { watch } from 'vue';
-import { computed } from 'vue';
+// import { computed } from 'vue';
 
 
 // 使用 Pinia store
 const adminStore = useAdminStore();
 
 // 获取管理员模式状态
-const isAdmin = computed(() => adminStore.isAdmin);
+// const isAdmin = computed(() => adminStore.isAdmin);
 
 // 切换管理员模式
 const toggleAdminMode = () => {
@@ -324,7 +340,7 @@ const toggleAdminMode = () => {
 .tooltip-content {
   position: absolute;
   /* top: 102%; */
-  bottom: 102%; /* 改为从下方向上展开 */
+  bottom: 130%; /* 改为从下方向上展开 */
   left: 50%;
   transform: translateX(-50%) scale(0.8);
   background: white;
@@ -338,7 +354,7 @@ const toggleAdminMode = () => {
     transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55),
     visibility 0.5s ease;
   z-index: 100;
-  pointer-events: none;
+  pointer-events: all;
   backdrop-filter: blur(10px);
   background: rgba(255, 255, 255, 0.9);
 }
@@ -348,7 +364,20 @@ const toggleAdminMode = () => {
   visibility: visible;
   transform: translateX(-50%) scale(1);
   pointer-events: auto;
+  transition-delay: 0s;
 }
+
+.tooltip-container .tooltip-content {
+  transition-delay: 0.5s;
+}
+
+
+/* .tooltip-container:hover .tooltip-content {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) scale(1);
+  pointer-events: auto;
+} */
 
 /* Social Icons Styles */
 .social-icons {
@@ -420,12 +449,23 @@ const toggleAdminMode = () => {
   background: linear-gradient(135deg, #1da1f2, #1a91da);
 }
 
+
+
 .social-icon.facebook:hover {
   background: linear-gradient(135deg, #1877f2, #165ed0);
 }
 
 .social-icon.linkedin:hover {
   background: linear-gradient(135deg, #0077b5, #005e94);
+}
+
+
+.social-icon.fix:hover {
+  background: linear-gradient(135deg, #1da1f2, #1a91da);
+}
+
+.social-icon.add:hover {
+  background: linear-gradient(135deg, #1da1f2, #1a91da);
 }
 
 /* Animation for Pulse Effect */
@@ -477,13 +517,15 @@ const toggleAdminMode = () => {
   position: absolute;
   /* top: -10px; */
   top: 100%;
-  /* left: 50%; */
+
+  left: 50%;
   transform: translateX(-50%);
-  /* border-width: 0 10px 10px 10px;  */
-  border-width: 10px 10px 0 10px;  
+  /* border-width: 0px 10px 10px 10px;  */
+  border-width: 10px 10px 0px 10px;  
   border-style: solid;
-  border-color: transparent transparent rgba(255, 255, 255, 0.9) transparent;
-  filter: drop-shadow(0 -3px 3px rgba(0, 0, 0, 0.1));
+  border-color: rgba(255, 255, 255, 0.9) transparent transparent transparent; 
+  /* border-color: transparent transparent rgba(255, 255, 255, 0.9) transparent; */
+  filter: drop-shadow(0 -3px 3px rgba(126, 44, 44, 0.1));
 }
 
 /* Accessibility */

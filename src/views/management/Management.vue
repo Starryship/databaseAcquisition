@@ -131,12 +131,12 @@
                 />
               </td>
               <td class="action-buttons">
-                <button @click="handleAction(item.id)">详细信息</button>
+                <button @click="handleAction(item.id)" style="background-color: rgb(97, 41, 47); ">详细信息</button>
 
-                <div v-if="isAdmin">
-                  <button @click="handleAction(item.id)">删除文物</button>
-                </div>
-                <div v-else></div>
+                <!-- <div > -->
+                  <button @click="handleAction(item.id)" v-if="isAdmin" style=" background-color: rgb(220, 53, 69); ">删除文物</button>
+                <!-- </div>
+                <div v-else></div> -->
               </td>
             </tr>
           </thead>
@@ -320,7 +320,7 @@ const handleSearch = () => {
 .back {
   width: 100vw;
   height: 100vh;
-  background-color: rgb(71, 25, 48); /* 背景颜色 */
+  background-color: rgb(91,37,40); /* 背景颜色 */
   overflow-y: auto; /* 如果内容超出，允许垂直滚动 */
 }
 
@@ -407,6 +407,9 @@ const handleSearch = () => {
 
 .collect .action-buttons {
   text-align: center; /* 确保按钮居中显示 */
+  display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .collect .action-buttons button {
@@ -429,13 +432,13 @@ const handleSearch = () => {
   transform: scale(1.1); /* 鼠标悬停时稍微放大 */
 }
 
-.collect .action-buttons button:first-child {
-  background-color: rgb(97, 41, 47); /* 设置第一个按钮的背景色 */
+/* .collect .action-buttons button:first-child {
+  background-color: rgb(97, 41, 47); 
 }
 
 .collect .action-buttons button:last-child {
-  background-color: rgb(220, 53, 69); /* 设置第二个按钮的背景色 */
-}
+  background-color: rgb(220, 53, 69);
+} */
 
 p {
   font-size: 24px;
