@@ -1,12 +1,4 @@
 <template>
-  <!-- <div class="back">
-        <div class="management-container">
-      <h1>文物详情 - ID: {{ artifactId }}</h1>
-
-
-    </div>
-    </div> -->
-
   <div class="back">
     <div class="management-container">
       <!-- <h1>文物详情 - ID: {{ id }}</h1> -->
@@ -30,7 +22,6 @@
             <label>类别:</label>
             <input v-model="category" type="text" />
 
-
             <label>出土地点:</label>
             <input v-model="location_time" type="text" />
 
@@ -44,7 +35,6 @@
             <input v-model="text" type="text" />
           </div>
           <div v-else>
-
             <div class="info-item">
               <span class="info-key">文物ID</span>
               <span class="info-value">{{ id }}</span>
@@ -83,10 +73,9 @@
 
 <script setup>
 import { useRoute } from 'vue-router' // 导入 useRoute 钩子
-// import { ref } from 'vue';
+
 import { useAdminStore } from '@/stores/useAdminStore' // 引入 Pinia store
 
-// import { watch } from 'vue';
 import { computed } from 'vue'
 
 const route = useRoute()
@@ -105,7 +94,7 @@ const isAdmin = computed(() => adminStore.isAdmin)
 .back {
   width: 100vw;
   height: 100vh;
-  background-color: rgb(91,37,40); /* 背景颜色 */
+  background-color: rgb(91, 37, 40); /* 背景颜色 */
   overflow-y: auto; /* 如果内容超出，允许垂直滚动 */
 }
 

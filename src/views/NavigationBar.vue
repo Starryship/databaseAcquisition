@@ -1,169 +1,99 @@
 <template>
-
-    <!-- 悬浮在顶部的导航栏 -->
-    <nav class="navbar">
+  <!-- 悬浮在顶部的导航栏 -->
+  <nav class="navbar">
     <ul>
-        <li><router-link to="/home">首页</router-link></li>
-        <li><router-link to="/exhibit">文物展示</router-link></li>
-        <li><router-link to="/management">文物管理</router-link></li>
-        <li><router-link to="/personal">管理员中心</router-link></li>
+      <li><router-link to="/home">首页</router-link></li>
+      <li><router-link to="/exhibit">文物展示</router-link></li>
+      <li><router-link to="/management">文物管理</router-link></li>
+      <li><router-link to="/personal">管理员中心</router-link></li>
     </ul>
-    </nav>
-    <!-- 显示子路由的组件 -->
-    <router-view></router-view>
+  </nav>
+  <!-- 显示子路由的组件 -->
+  <router-view></router-view>
 
 
-    <!-- <button @click="toggleAdminMode" class="admin-toggle-button">
-    {{ isAdmin ? '退出管理员模式' : '进入管理员模式' }}
-  </button> -->
+  <div class="tooltip-container">
+    <div class="button-content">
+      <span class="text">工具</span>
 
 
+      <svg
+        class="share-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width="24"
+        height="24"
+      >
+        <path
+          d="M19 5h-4V4c0-.55-.45-1-1-1H10c-.55 0-1 .45-1 1v1H5c-1.1 0-1.99.9-1.99 2L3 17c0 1.1.89 2 1.99 2h14c1.1 0 1.99-.9 1.99-2l-.01-10c0-1.1-.89-2-1.99-2zm-7 0H12V4h-2v1zm6 12H7V7h12v10z"
+        />
+      </svg>
+
+    </div>
+    <div class="tooltip-content">
+      <div class="social-icons">
+        <a @click="toggleAdminMode" class="social-icon fix">
 
 
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+            <path
+              d="M19.14 12.94l1.42-1.42c.2-.2.26-.51.19-.77l-1.27-3.88c.06-.35-.07-.71-.33-.92L16.18 3.95c-.23-.26-.56-.38-.89-.33l-3.88 1.27c-.27-.1-.58-.11-.86-.03l-1.44-2.11a.75.75 0 0 0-.9-.26l-2.66 1.55c-.34.19-.46.59-.32.92l1.27 3.88c-.07.35.07.71.33.92l3.62 3.62a3.99 3.99 0 0 0-.01 1.49l-3.62 3.62c-.26.23-.39.58-.33.92l1.27 3.88c-.14.34-.02.71.19.77l1.42 1.42c.2.2.51.26.77.19l3.88-1.27c.27.1.57.11.86.03l1.44 2.11a.75.75 0 0 0 .9.26l2.66-1.55c.34-.19.46-.59.32-.92l-1.27-3.88c.07-.35-.07-.71-.33-.92l-3.62-3.62c-.19-.19-.44-.34-.72-.44zM12 15c-1.38 0-2.5-1.12-2.5-2.5S10.62 10 12 10s2.5 1.12 2.5 2.5S13.38 15 12 15z"
+            />
+          </svg>
+        </a>
+        <a href="#" class="social-icon add">
 
 
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+            <path d="M19 13H5v-2h14v2zM12 5v14h-2V5h2z" />
+          </svg>
+        </a>
 
-<div class="tooltip-container">
-  <div class="button-content">
-    <span class="text">工具</span>
-    <!-- <svg
-      class="share-icon"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      width="24"
-      height="24"
-    >
-      <path
-        d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92zM18 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM6 13c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm12 7.02c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"
-      ></path>
-    </svg> -->
-
-
-
-    <svg class="share-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-  <path d="M19 5h-4V4c0-.55-.45-1-1-1H10c-.55 0-1 .45-1 1v1H5c-1.1 0-1.99.9-1.99 2L3 17c0 1.1.89 2 1.99 2h14c1.1 0 1.99-.9 1.99-2l-.01-10c0-1.1-.89-2-1.99-2zm-7 0H12V4h-2v1zm6 12H7V7h12v10z"/>
-</svg>
-
-<!-- <svg class="share-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-  <path d="M19.44 10.34c.4 0 .77.22.93.61.18.48.05 1.01-.28 1.39L18.4 14.5l-3.11-3.11c-.39-.39-.39-1.02 0-1.41l5.01-5.01c.39-.39.39-1.02 0-1.41-.39-.39-1.02-.39-1.41 0l-5.01 5.01c-.39.39-1.02.39-1.41 0l-3.11-3.11-2.65 2.65c-.39.39-.39 1.02 0 1.41L13 9.62c-.39.39-.39 1.02 0 1.41l3.01 3.01c.39.39 1.02.39 1.41 0l5.01-5.01c.39-.39.39-1.02 0-1.41-.4-.39-.96-.39-1.35-.01z"/>
-</svg> -->
-
-
-
-  </div>
-  <div class="tooltip-content">
-    <div class="social-icons">
-      <a @click="toggleAdminMode" class="social-icon fix">
-        <!-- <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          width="24"
-          height="24"
-        >
-          <path
-            d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"
-          ></path>
-        </svg> -->
-
-
-        <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-  <path d="M19.14 12.94l1.42-1.42c.2-.2.26-.51.19-.77l-1.27-3.88c.06-.35-.07-.71-.33-.92L16.18 3.95c-.23-.26-.56-.38-.89-.33l-3.88 1.27c-.27-.1-.58-.11-.86-.03l-1.44-2.11a.75.75 0 0 0-.9-.26l-2.66 1.55c-.34.19-.46.59-.32.92l1.27 3.88c-.07.35.07.71.33.92l3.62 3.62a3.99 3.99 0 0 0-.01 1.49l-3.62 3.62c-.26.23-.39.58-.33.92l1.27 3.88c-.14.34-.02.71.19.77l1.42 1.42c.2.2.51.26.77.19l3.88-1.27c.27.1.57.11.86.03l1.44 2.11a.75.75 0 0 0 .9.26l2.66-1.55c.34-.19.46-.59.32-.92l-1.27-3.88c.07-.35-.07-.71-.33-.92l-3.62-3.62c-.19-.19-.44-.34-.72-.44zM12 15c-1.38 0-2.5-1.12-2.5-2.5S10.62 10 12 10s2.5 1.12 2.5 2.5S13.38 15 12 15z"/>
-</svg>
-
-
-
-      </a>
-      <a href="#" class="social-icon add">
-        <!-- <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          width="24"
-          height="24"
-        >
-          <path
-            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
-          ></path>
-        </svg> -->
-
-
-        <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-  <path d="M19 13H5v-2h14v2zM12 5v14h-2V5h2z"/>
-</svg>
-
-
-
-      </a>
-      <a href="#" class="social-icon linkedin">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          width="24"
-          height="24"
-        >
-          <path
-            d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
-          ></path>
-        </svg>
-      </a>
+      </div>
     </div>
   </div>
-</div>
+</template>
 
-
-
-
-
-
-  </template>
-  
-  <script setup>
-    // 可以根据需要在这里添加逻辑
-    import { useAdminStore } from '@/stores/useAdminStore'; // 引入 Pinia store
-
-// import { watch } from 'vue';
-// import { computed } from 'vue';
+<script setup>
+// 可以根据需要在这里添加逻辑
+import { useAdminStore } from '@/stores/useAdminStore' // 引入 Pinia store
 
 
 // 使用 Pinia store
-const adminStore = useAdminStore();
+const adminStore = useAdminStore()
 
-// 获取管理员模式状态
-// const isAdmin = computed(() => adminStore.isAdmin);
 
 // 切换管理员模式
 const toggleAdminMode = () => {
-  adminStore.toggleAdminMode();
+  adminStore.toggleAdminMode()
+}
+</script>
 
-};
-    
-  </script>
-  
-  <style scoped>
-  /* 导航栏样式 */
-  .navbar {
-    position: fixed; /* 固定位置 */
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: rgba(112,60,78,80%);
-    padding: 20px 0;
-    z-index: 1000; /* 确保导航栏在其他内容之上 */
-  }
-  
-  .navbar ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .navbar li {
-    margin: 0 30px;
-  }
-  
+<style scoped>
+/* 导航栏样式 */
+.navbar {
+  position: fixed; /* 固定位置 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(112, 60, 78, 80%);
+  padding: 20px 0;
+  z-index: 1000; /* 确保导航栏在其他内容之上 */
+}
 
-  .navbar a {
+.navbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.navbar li {
+  margin: 0 30px;
+}
+
+.navbar a {
   color: white;
   text-decoration: none;
   font-size: 23px;
@@ -191,15 +121,14 @@ const toggleAdminMode = () => {
   height: 3px;
   background-color: white; /* 给选中的链接添加白色下划线 */
 }
-  
-  /* 页面内容样式 */
-  .content {
-    margin-top: 60px; /* 给页面内容添加足够的上边距，避免被导航栏遮挡 */
-    height: 2000px; /* 让页面有滚动效果 */
-  }
 
+/* 页面内容样式 */
+.content {
+  margin-top: 60px; /* 给页面内容添加足够的上边距，避免被导航栏遮挡 */
+  height: 2000px; /* 让页面有滚动效果 */
+}
 
-  .admin-toggle-button {
+.admin-toggle-button {
   position: fixed;
   top: 20px;
   right: 20px;
@@ -216,26 +145,17 @@ const toggleAdminMode = () => {
   background-color: #0056b3;
 }
 
-
-
-
-
-
-
-
-
-/* From Uiverse.io by Mohammad-Rahme-576 */ 
+/* From Uiverse.io by Mohammad-Rahme-576 */
 /* Container Styles */
 .tooltip-container {
   position: fixed; /* 使容器固定在视口中 */
-  bottom: 10%;     /* 距离屏幕底部20px */
-  right: 5%;      /* 距离屏幕右侧20px */
+  bottom: 10%; /* 距离屏幕底部20px */
+  right: 5%; /* 距离屏幕右侧20px */
   /* position: relative; */
   display: inline-block;
-  font-family: "Arial", sans-serif;
+  font-family: 'Arial', sans-serif;
   overflow: visible;
   z-index: 2000; /* 确保导航栏在其他内容之上 */
-
 }
 
 /* Button Styles */
@@ -259,15 +179,11 @@ const toggleAdminMode = () => {
 }
 
 .button-content::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(
-    135deg,
-    rgba(110, 142, 251, 0.4),
-    rgba(167, 119, 227, 0.4)
-  );
+  background: linear-gradient(135deg, rgba(110, 142, 251, 0.4), rgba(167, 119, 227, 0.4));
   filter: blur(15px);
   opacity: 0;
   transition: opacity 0.5s ease;
@@ -275,17 +191,13 @@ const toggleAdminMode = () => {
 }
 
 .button-content::after {
-  content: "";
+  content: '';
   position: absolute;
   top: -50%;
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.3) 0%,
-    rgba(255, 255, 255, 0) 70%
-  );
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
   transform: scale(0);
   transition: transform 0.6s ease-out;
   z-index: -1;
@@ -372,12 +284,6 @@ const toggleAdminMode = () => {
 }
 
 
-/* .tooltip-container:hover .tooltip-content {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) scale(1);
-  pointer-events: auto;
-} */
 
 /* Social Icons Styles */
 .social-icons {
@@ -404,7 +310,7 @@ const toggleAdminMode = () => {
 }
 
 .social-icon::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
   background: radial-gradient(
@@ -443,20 +349,6 @@ const toggleAdminMode = () => {
 .social-icon:hover svg {
   transform: scale(1.2);
   fill: white;
-}
-
-.social-icon.twitter:hover {
-  background: linear-gradient(135deg, #1da1f2, #1a91da);
-}
-
-
-
-.social-icon.facebook:hover {
-  background: linear-gradient(135deg, #1877f2, #165ed0);
-}
-
-.social-icon.linkedin:hover {
-  background: linear-gradient(135deg, #0077b5, #005e94);
 }
 
 
@@ -498,7 +390,7 @@ const toggleAdminMode = () => {
 }
 
 .button-content::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
   background: rgba(255, 255, 255, 0.3);
@@ -513,18 +405,14 @@ const toggleAdminMode = () => {
 
 /* Tooltip Arrow */
 .tooltip-content::before {
-  content: "";
+  content: '';
   position: absolute;
-  /* top: -10px; */
   top: 100%;
-
   left: 50%;
   transform: translateX(-50%);
-  /* border-width: 0px 10px 10px 10px;  */
-  border-width: 10px 10px 0px 10px;  
+  border-width: 10px 10px 0px 10px;
   border-style: solid;
-  border-color: rgba(255, 255, 255, 0.9) transparent transparent transparent; 
-  /* border-color: transparent transparent rgba(255, 255, 255, 0.9) transparent; */
+  border-color: rgba(255, 255, 255, 0.9) transparent transparent transparent;
   filter: drop-shadow(0 -3px 3px rgba(126, 44, 44, 0.1));
 }
 
@@ -651,7 +539,4 @@ const toggleAdminMode = () => {
 .tooltip-content::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-
-
-  </style>
-  
+</style>

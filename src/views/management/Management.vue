@@ -38,26 +38,6 @@
         </div>
       </div>
 
-      <!-- <div class="input-container">
-        <input
-          v-model="searchQuery"
-          type="text"
-          id="input"
-          class="search-input"
-          required=""
-        />
-
-
-
-
-
-
-        <button @click="handleSearch" class="search-button"></button>
-        <label for="input" class="label">请输入文物名称或ID</label>
-        
-        <div class="underline"></div>
-      </div> -->
-
       <div class="bar">
         <table>
           <colgroup>
@@ -131,10 +111,18 @@
                 />
               </td>
               <td class="action-buttons">
-                <button @click="handleAction(item.id)" style="background-color: rgb(97, 41, 47); ">详细信息</button>
+                <button @click="handleAction(item.id)" style="background-color: rgb(97, 41, 47)">
+                  详细信息
+                </button>
 
                 <!-- <div > -->
-                  <button @click="handleAction(item.id)" v-if="isAdmin" style=" background-color: rgb(220, 53, 69); ">删除文物</button>
+                <button
+                  @click="handleAction(item.id)"
+                  v-if="isAdmin"
+                  style="background-color: rgb(220, 53, 69)"
+                >
+                  删除文物
+                </button>
                 <!-- </div>
                 <div v-else></div> -->
               </td>
@@ -164,11 +152,12 @@
 <script setup>
 // 可以根据需要在这里添加逻辑
 
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 import { useRouter } from 'vue-router'
 
 import { useAdminStore } from '@/stores/useAdminStore' // 引入 Pinia store
+import { useCulturalInfoStore } from '@/stores/culturalInfo'
 
 // import { watch } from 'vue';
 import { computed } from 'vue'
@@ -180,61 +169,7 @@ const adminStore = useAdminStore()
 const isAdmin = computed(() => adminStore.isAdmin)
 const router = useRouter()
 
-let id = 1
-
-// 定义一个数组
-const artifacts = ref([
-  {
-    id: id++,
-    name: '凤麒麟纹石雕',
-    era: '元',
-    location_time: '1966年北京市桦皮厂西部明城墙基址出土啊实打实大苏打实打实大苏打',
-    image: '/assets/list/list1.jpg',
-    parameter: 'aaaaaa',
-    category: '传世品',
-    text: '1966年北京市桦皮厂西部明城墙基址出土1966年北京市桦皮厂西部明城墙基址出土1966年北京市桦皮厂西部明城墙基址出土1966年北京市桦皮厂西部明城墙基址出土1966年北京市桦皮厂西部明城墙基址出土1966年北京市桦皮厂西部明城墙基址出土1966年北京市桦皮厂西部明城墙基址出土1966年北京市桦皮厂西部明城墙基址出土1966年北京市桦皮厂西部明城墙基址出土1966年北京市桦皮厂西部明城墙基址出土1966年北京市桦皮厂西部明城墙基址出土1966年北京市桦皮厂西部明城墙基址出土1966年北京市桦皮厂西部明城墙基址出土1966年北京市桦皮厂西部明城墙基址出土',
-  },
-  {
-    id: id++,
-    name: '窑白釉龙纹瓷盘',
-    era: '金',
-    location_time: '1985年吉林农安县城北金代窖藏出土',
-    image: '/assets/list/list2.jpg',
-    parameter: 'aaaaaa',
-    category: '传世品',
-    text: '1985年吉林农安县城北金代窖藏出土1985年吉林农安县城北金代窖藏出土1985年吉林农安县城北金代窖藏出土1985年吉林农安县城北金代窖藏出土1985年吉林农安县城北金代窖藏出土1985年吉林农安县城北金代窖藏出土1985年吉林农安县城北金代窖藏出土1985年吉林农安县城北金代窖藏出土1985年吉林农安县城北金代窖藏出土1985年吉林农安县城北金代窖藏出土1985年吉林农安县城北金代窖藏出土',
-  },
-  {
-    id: id++,
-    name: '窑白釉龙纹瓷盘',
-    era: '金',
-    location_time: '1985年吉林农安县城北金代窖藏出土',
-    image: '/assets/list/list2.jpg',
-    parameter: 'aaaaaa',
-    category: '货币',
-    text: '1985年吉林农安县城北金代窖藏出土1985年吉林农安县城北金代窖藏出土1985年吉林农安县城北金代窖藏出土1985年吉林农安县城北金代窖藏出土1985年吉林农安县城北金代窖藏出土1985年吉林农安县城北金代窖藏出土1985年吉林农安县城北金代窖藏出土1985年吉林农安县城北金代窖藏出土1985年吉林农安县城北金代窖藏出土1985年吉林农安县城北金代窖藏出土1985年吉林农安县城北金代窖藏出土1985年吉林农安县城北金代窖藏出土1985年吉林农安县城北金代窖藏出土1985年吉林农安县城北金代窖藏出土1985年吉林农安县城北金代窖藏出土1985年吉林农安县城北金代窖藏出土1985年吉林农安县城北金代窖藏出土1985年吉林农安县城北金代窖藏出土',
-  },
-  {
-    id: id++,
-    name: '青铜剑',
-    era: '秦',
-    location_time: '1974年陕西临潼泰兵马俑坑出 ',
-    image: '/assets/list/list3.jpg',
-    parameter: 'aaaaaa',
-    category: '艺术品',
-    text: '1974年陕西临潼泰兵马俑坑出1974年陕西临潼泰兵马俑坑出1974年陕西临潼泰兵马俑坑出1974年陕西临潼泰兵马俑坑出1974年陕西临潼泰兵马俑坑出1974年陕西临潼泰兵马俑坑出1974年陕西临潼泰兵马俑坑出1974年陕西临潼泰兵马俑坑出1974年陕西临潼泰兵马俑坑出1974年陕西临潼泰兵马俑坑出1974年陕西临潼泰兵马俑坑出1974年陕西临潼泰兵马俑坑出',
-  },
-  {
-    id: id++,
-    name: '青铜剑',
-    era: '秦',
-    location_time: '1974年陕西临潼泰兵马俑坑出 ',
-    image: '/assets/list/list3.jpg',
-    parameter: 'aaaaaa',
-    category: '艺术品',
-    text: '1974年陕西临潼泰兵马俑坑出1974年陕西临潼泰兵马俑坑出1974年陕西临潼泰兵马俑坑出1974年陕西临潼泰兵马俑坑出1974年陕西临潼泰兵马俑坑出1974年陕西临潼泰兵马俑坑出1974年陕西临潼泰兵马俑坑出1974年陕西临潼泰兵马俑坑出1974年陕西临潼泰兵马俑坑出1974年陕西临潼泰兵马俑坑出1974年陕西临潼泰兵马俑坑出1974年陕西临潼泰兵马俑坑出',
-  },
-])
+const artifacts = ref([])
 
 const handleAction = (id_) => {
   const artifact = artifacts.value.find((item) => item.id === id_)
@@ -314,13 +249,17 @@ const handleSearch = () => {
     alert('请输入文物名称或ID')
   }
 }
+
+onMounted(() => {
+  artifacts.value = useCulturalInfoStore().$state.data
+})
 </script>
 
 <style scoped>
 .back {
   width: 100vw;
   height: 100vh;
-  background-color: rgb(91,37,40); /* 背景颜色 */
+  background-color: rgb(91, 37, 40); /* 背景颜色 */
   overflow-y: auto; /* 如果内容超出，允许垂直滚动 */
 }
 
@@ -406,17 +345,20 @@ const handleSearch = () => {
 }
 
 .collect .action-buttons {
-  text-align: center; /* 确保按钮居中显示 */
-  display: flex;
-    flex-direction: column;
-    gap: 10px;
+  text-align: center;
+  /* display: flex; */
+
+  flex-direction: column;
+  align-items: center;
+
+  gap: 10px;
 }
 
 .collect .action-buttons button {
   background-color: #007bff; /* 设置按钮的背景色 */
   border-radius: 8px; /* 更加圆润的边角 */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 添加阴影 */
-  margin: 0 5px;
+  margin: 3px 5px;
   color: white; /* 设置字体颜色 */
   padding: 5px 5px; /* 设置内边距 */
   font-size: 10px; /* 设置字体大小 */
@@ -431,14 +373,6 @@ const handleSearch = () => {
   box-shadow: 0 4px 10px rgba(236, 5, 5, 0.2); /* 增加阴影 */
   transform: scale(1.1); /* 鼠标悬停时稍微放大 */
 }
-
-/* .collect .action-buttons button:first-child {
-  background-color: rgb(97, 41, 47); 
-}
-
-.collect .action-buttons button:last-child {
-  background-color: rgb(220, 53, 69);
-} */
 
 p {
   font-size: 24px;
@@ -541,23 +475,20 @@ p {
 .search-panels {
   --default-color: #9e9e9e;
   --color-text: #ccc;
-  --color-active: rgb(151,66,75);
+  --color-active: rgb(151, 66, 75);
   --color-active-input: #f5f5f5;
   --transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --width-input: 200px;
   font-family: 'KaiTi', 'STKaiti', serif; /* 设置优雅字体 */
   font-weight: bold; /* 设置字体加粗 */
   display: flex;
-  justify-content: flex-end;  /* 将输入框对齐到右侧 */
-  width: 100%;  /* 确保父容器占满全宽 */
+  justify-content: flex-end; /* 将输入框对齐到右侧 */
+  width: 100%; /* 确保父容器占满全宽 */
   padding: 10px;
-  
-
 }
 
 .search-group {
   position: relative;
-  
 }
 
 .input {
@@ -571,10 +502,8 @@ p {
   color: var(--color-active-input);
   transition: border var(--transition);
   color: #333;
-height: 10%;
-margin-right: 20px;
-
-  
+  height: 10%;
+  margin-right: 20px;
 }
 
 .enter-label {
@@ -584,20 +513,17 @@ margin-right: 20px;
   pointer-events: none;
   transform: translateY(1rem);
   transition: var(--transition);
-  
 }
 
 .enter-label {
   color: var(--default-color);
   pointer-events: none;
-  
 }
 
 .input:focus,
 input:valid {
   outline: none;
   border: 1.5px solid var(--color-active);
-  
 }
 
 .input:focus ~ label,
@@ -620,7 +546,6 @@ input:valid ~ label {
   transition: 300ms cubic-bezier(0.4, 0, 0.2, 1);
   transition-delay: 100ms;
   opacity: 0;
-
 }
 
 .input:focus ~ .btn-box,
@@ -658,12 +583,10 @@ input:valid ~ .btn-box:hover:active {
   border-radius: 100%;
   padding: 0;
   transition: var(--transition);
-
 }
 
 .btn-search:active {
   transform: scale(1);
-  
 }
 
 .btn-search svg {
