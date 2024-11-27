@@ -30,24 +30,47 @@
       </svg>
 
     </div>
+
+
+
+
     <div class="tooltip-content">
       <div class="social-icons">
-        <a @click="toggleAdminMode" class="social-icon fix">
 
 
+        <ul class="example-2">
+          <li class="icon-content">
+
+        <a @click="toggleAdminMode"  data-social="mana" href="#" class="social-icon fix">
+          
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
             <path
               d="M19.14 12.94l1.42-1.42c.2-.2.26-.51.19-.77l-1.27-3.88c.06-.35-.07-.71-.33-.92L16.18 3.95c-.23-.26-.56-.38-.89-.33l-3.88 1.27c-.27-.1-.58-.11-.86-.03l-1.44-2.11a.75.75 0 0 0-.9-.26l-2.66 1.55c-.34.19-.46.59-.32.92l1.27 3.88c-.07.35.07.71.33.92l3.62 3.62a3.99 3.99 0 0 0-.01 1.49l-3.62 3.62c-.26.23-.39.58-.33.92l1.27 3.88c-.14.34-.02.71.19.77l1.42 1.42c.2.2.51.26.77.19l3.88-1.27c.27.1.57.11.86.03l1.44 2.11a.75.75 0 0 0 .9.26l2.66-1.55c.34-.19.46-.59.32-.92l-1.27-3.88c.07-.35-.07-.71-.33-.92l-3.62-3.62c-.19-.19-.44-.34-.72-.44zM12 15c-1.38 0-2.5-1.12-2.5-2.5S10.62 10 12 10s2.5 1.12 2.5 2.5S13.38 15 12 15z"
             />
           </svg>
         </a>
-        <a href="#" class="social-icon add">
+
+        <div class="tooltip">管理员</div>
+        </li>
+      </ul>
+
+
+
+      <ul class="example-2">
+        <li class="icon-content">
+        <a href="#" data-social="aa" class="social-icon add">
 
 
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
             <path d="M19 13H5v-2h14v2zM12 5v14h-2V5h2z" />
           </svg>
         </a>
+
+        <div class="tooltip">添加文物</div>
+        </li>
+      </ul>
+
+        
 
       </div>
     </div>
@@ -255,7 +278,7 @@ const toggleAdminMode = () => {
   bottom: 130%; /* 改为从下方向上展开 */
   left: 50%;
   transform: translateX(-50%) scale(0.8);
-  background: white;
+  /* background: white; */
   border-radius: 15px;
   padding: 22px;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
@@ -268,7 +291,7 @@ const toggleAdminMode = () => {
   z-index: 100;
   pointer-events: all;
   backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(164,164,244, 0.4);
 }
 
 .tooltip-container:hover .tooltip-content {
@@ -539,4 +562,112 @@ const toggleAdminMode = () => {
 .tooltip-content::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+
+
+
+
+
+
+/* From Uiverse.io by PriyanshuGupta28 */ 
+ul {
+  list-style: none;
+}
+
+.example-2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.example-2 .icon-content {
+  margin: 1px 1px;
+  position: relative;
+
+
+}
+ 
+.example-2 .icon-content .tooltip {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  width: 60px;
+  transform: translateX(-50%);
+  color: #050505;
+  padding: 6px 10px;
+  border-radius: 5px;
+  opacity: 0;
+  visibility: hidden;
+  font-size: 14px;
+  transition: all 0.3s ease;
+
+  font-family: 'KaiTi', 'STKaiti', serif; /* 设置优雅字体 */
+
+  font-weight: bold; /* 设置字体加粗 */
+}
+.example-2 .icon-content:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+  top: -50px;
+}
+
+ 
+.example-2 .icon-content a {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  color: #4d4d4d;
+  background-color: #fff;
+  transition: all 0.3s ease-in-out;
+}
+
+
+.example-2 .icon-content a:hover {
+  box-shadow: 3px 2px 45px 0px rgb(0 0 0 / 12%);
+}
+
+
+.example-2 .icon-content a svg {
+  position: relative;
+  z-index: 1;
+  width: 30px;
+  height: 30px;
+}
+
+.example-2 .icon-content a:hover {
+  color: white;
+}
+.example-2 .icon-content a .filled {
+  position: absolute;
+  top: auto;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background-color: #000;
+  transition: all 0.3s ease-in-out;
+}
+.example-2 .icon-content a:hover .filled {
+  height: 100%;
+}
+.example-2 .icon-content a[data-social="mana"] .filled,
+.example-2 .icon-content a[data-social="mana"] ~ .tooltip {
+  background-color: rgba(162,131,218,0.7);
+}
+.example-2 .icon-content a[data-social="aa"] .filled,
+.example-2 .icon-content a[data-social="aa"] ~ .tooltip {
+  background-color: rgba(133,152,248,0.7);
+}
+
+
+
+
+
+
+
 </style>

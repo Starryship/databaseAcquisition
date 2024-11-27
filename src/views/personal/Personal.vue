@@ -1,5 +1,6 @@
 <template>
-  <form class="form login">
+  <div class="bg">
+    <form class="form login">
     <span class="input-span">
       <label for="email" class="label">账号</label>
       <input type="email" name="email" id="email"
@@ -10,6 +11,7 @@
     /></span>
     <input class="submit" type="submit" value="登录" />
   </form>
+  </div>
 </template>
 
 <script setup>
@@ -17,12 +19,37 @@
 </script>
 
 <style scoped>
-.login{
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%,-50%);
+
+
+.bg {
+  width: 100vw;
+  height: 100vh;
+  background-image: url(https://digicol.dpm.org.cn/images/bg2.jpg);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
+  z-index: 1;
 }
+
+
+
+
+.login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f5f5f5;
+  border-radius: 25px;
+  padding: 40px 50px;
+  box-sizing: border-box;
+}
+
 
 .form {
 --bg-light: #efefef;
@@ -34,7 +61,7 @@ flex-direction: column;
 align-items: center;
 gap: 2rem;
 width: 100%;
-max-width: 300px;
+max-width: 400px;
 }
 
 .form .input-span {
