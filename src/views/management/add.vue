@@ -1,6 +1,7 @@
 <template>
   <div class="back">
-    <div class="form-container management-container">
+    <div class="form-container">
+      <h2 style="text-align: center;margin-bottom: 20px;margin-top: 20px;">添加文物</h2>
       <el-form
         ref="ruleFormRef"
         style="max-width: 600px"
@@ -155,33 +156,43 @@ const resetForm = (formEl) => {
 </script>
 
 <style scoped>
+.back {
+  width: 100vw;
+  min-height: 100vh;
+  background-image: url(https://digicol.dpm.org.cn/images/bg2.jpg);
+  /* background-color: rgb(91, 37, 40); */
+  overflow-y: auto;
+}
+
 .form-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  width: 80%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 6px;
+  padding-top: 20px;
   background-color: #f4f4f4;
+  box-sizing: border-box;
+  border-radius: 10px;
 }
 
 .demo-ruleForm {
+  display: flex;
+  flex-direction: column;
+  gap:10px;
   width: 100%;
-  margin-top: 15%;
-  max-width: 600px;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
-.back {
-  width: 100vw;
-  height: 100vh;
-  background-color: rgb(91, 37, 40); /* 背景颜色 */
-  overflow-y: auto; /* 如果内容超出，允许垂直滚动 */
-}
 
-.management-container {
+/* .management-container {
   margin: 0px auto;
   width: 80%;
-  height: fit-content; /* 自适应高度 */
-  background-color: rgb(248, 244, 238); /* 管理容器背景色 */
+  height: fit-content;
+  background-color: rgb(248, 244, 238);
   padding: 120px 40px 50px 40px;
   margin-bottom: 15%;
-}
+} */
 </style>
