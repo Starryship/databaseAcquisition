@@ -24,6 +24,7 @@
 import { ref } from 'vue'
 import Checkbox from '@/components/Checkbox.vue'
 
+// 传世品、革命文物、国史文物、货币、考古发掘品、名族名俗文物、古籍文献、外国文物、艺术品
 const sorts = ref([
   {
     text: '传世品',
@@ -37,30 +38,54 @@ const sorts = ref([
     text: '艺术品',
     isChecked: true,
   },
-])
+  {
+    text: '革命文物',
+    isChecked: true,
+  },
+  {
+    text: '国史文物',
+    isChecked: true,
+  },
+  {
+    text: '考古发掘品',
+    isChecked: true,
+  },
+  {
+    text: '名族名俗文物',
+    isChecked: true,
+  },
+  {
+    text: '古籍文献',
+    isChecked: true,
+  },
+  {
+    text: '外国文物',
+    isChecked: true,
+  },
+]);
+
 </script>
 
 <style scoped>
 .filter {
-  width: 90%;
+  width: 95%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: #f8f4ee;
   margin: 0 auto;
-  padding: 20px 50px;
+  padding: 20px;
   border-radius: 10px;
   box-sizing: border-box;
 }
 
 .checkbox-groups {
   display: flex;
-  gap: 30px;
+  gap: 15px;
 }
 /* 搜索框 */
 .search{
-  width: 30%;
-  min-width: 200px;
+  min-width: 100px;
 }
 
 .inputbox {

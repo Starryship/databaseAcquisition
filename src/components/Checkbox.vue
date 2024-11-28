@@ -51,8 +51,8 @@ const checked = defineModel()
 }
 
 .checkbox-wrapper .terms-label .label-text {
-  margin-left: 6px;
-  font-size: 18px;
+  margin-left: 5px;
+  font-size: 15px;
   font-weight: bold;
 }
 
