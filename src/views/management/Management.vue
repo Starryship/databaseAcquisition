@@ -47,8 +47,8 @@
             <col style="width: 5%" />
             <col style="width: 20%" />
             <!-- <col style="width: 30%" /> -->
-            <col style="width: 10%" />
             <col style="width: 20%" />
+            <col style="width: 15%" />
             <col style="width: 20%" />
           </colgroup>
 
@@ -64,7 +64,13 @@
                   <select id="categoryFilter" v-model="selectedCategory">
                     <option value="">所有类别</option>
                     <option value="传世品">传世品</option>
+                    <option value="革命文物">革命文物</option>
+                    <option value="国史文物">国史文物</option>
                     <option value="货币">货币</option>
+                    <option value="考古发掘品">考古发掘品</option>
+                    <option value="名族名俗文物">名族名俗文物</option>
+                    <option value="古籍文献">古籍文献</option>
+                    <option value="外国文物">外国文物</option>
                     <option value="艺术品">艺术品</option>
                     <!-- 你可以根据实际的类别数据动态生成选项 --></select
                   >)</label
@@ -79,6 +85,7 @@
         </table>
       </div>
 
+
       <div class="collect">
         <table>
           <colgroup>
@@ -88,8 +95,8 @@
             <col style="width: 5%" />
             <col style="width: 20%" />
             <!-- <col style="width: 30%" /> -->
-            <col style="width: 10%" />
             <col style="width: 20%" />
+            <col style="width: 15%" />
             <col style="width: 20%" />
           </colgroup>
           <thead>
@@ -97,13 +104,13 @@
               <td>{{ item.id }}</td>
               <td>{{ item.name }}</td>
 
-              <td>{{ item.era }}</td>
+              <td>{{ item.period }}</td>
               <td>{{ item.category }}</td>
               <!-- <td>{{ item.location_time }}</td> -->
               <td>{{ item.parameter }}</td>
               <td>
                 <img
-                  :src="item.image"
+                  :src="item.thumbnail_path"
                   class="artifact-image"
                   alt="artifact image"
                   width="60"
@@ -117,7 +124,7 @@
 
                 <!-- <div > -->
                 <button
-                  @click="handleAction(item.id)"
+                  @click="handleDelete(item.id)"
                   v-if="isAdmin"
                   style="background-color: rgb(220, 53, 69)"
                 >
@@ -131,20 +138,10 @@
         </table>
       </div>
 
-      <p>管理</p>
-      <p>管理</p>
-      <p>管理</p>
-      <p>管理</p>
-      <p>管理</p>
-      <p>管理</p>
-      <p>管理</p>
-      <p>管理</p>
-      <p>管理</p>
-      <p>管理</p>
-      <p>管理</p>
-      <p>管理</p>
-      <p>管理</p>
-      <p>管理</p>
+
+
+
+
     </div>
   </div>
 </template>
@@ -157,10 +154,16 @@ import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { useAdminStore } from '@/stores/useAdminStore' // 引入 Pinia store
-import { useCulturalInfoStore } from '@/stores/culturalInfo'
+// import { useCulturalInfoStore } from '@/stores/culturalInfo'
 
 // import { watch } from 'vue';
 import { computed } from 'vue'
+import { useArtifactStore } from '@/stores/artifactStore'; // 引入 Pinia store
+import { get_artifacts,test_delete_artifact } from '@/api/request' // 导入API请求函数
+
+
+const artifactStore = useArtifactStore();
+
 
 // 使用 Pinia store
 const adminStore = useAdminStore()
@@ -171,34 +174,46 @@ const router = useRouter()
 
 const artifacts = ref([])
 
-const handleAction = (id_) => {
-  const artifact = artifacts.value.find((item) => item.id === id_)
-  const { id, era, location_time, image, name, parameter, category, text } = artifact
+// const handleAction = (id_) => {
+//   const artifact = artifacts.value.find((item) => item.id === id_)
+//   const { id, period, location_time, thumbnail_path, name, parameter, category, description } = artifact
 
+//   router.push({
+//     name: 'ArtifactDetail',
+//     params: { id },
+//     query: {
+//       period,
+//       location_time,
+//       thumbnail_path,
+//       name,
+//       parameter,
+//       category,
+//       description,
+//     },
+//   })
+// }
+
+
+const handleAction = (id_) => {
   router.push({
     name: 'ArtifactDetail',
-    params: { id },
-    query: {
-      era,
-      location_time,
-      image,
-      name,
-      parameter,
-      category,
-      text,
-    },
+    params: { id: id_ },
   })
 }
+
+
 
 // 筛选的类别
 const selectedCategory = ref('')
 
 // 过滤后的文物列表（根据筛选条件）
 const filteredArtifacts = computed(() => {
+
   return selectedCategory.value
     ? artifacts.value.filter((item) => item.category === selectedCategory.value)
     : artifacts.value
 })
+
 
 const searchQuery = ref('')
 
@@ -210,49 +225,109 @@ const handleSearch = () => {
       // 如果是名称，则搜索文物名称（假设名称唯一）
 
       const artifact = artifacts.value.find((item) => item.name === searchTerm)
-      const { id, era, location_time, image, name, parameter, category, text } = artifact
+      const  id = artifact.id
+
 
       router.push({
         name: 'ArtifactDetail',
-        params: { id },
-        query: {
-          era,
-          location_time,
-          image,
-          name,
-          parameter,
-          category,
-          text,
-        },
-      })
+        params: { id:id },
+        })
+
     } else {
       // 如果是ID，直接根据ID跳转
 
       const artifact = artifacts.value.find((item) => item.id == searchTerm)
-      const { id, era, location_time, image, name, parameter, category, text } = artifact
+      const  id = artifact.id
 
       router.push({
         name: 'ArtifactDetail',
-        params: { id },
-        query: {
-          era,
-          location_time,
-          image,
-          name,
-          parameter,
-          category,
-          text,
-        },
-      })
+        params: { id:id },
+        })
+
     }
   } else {
     alert('请输入文物名称或ID')
   }
 }
 
+
+
+const handleDelete = async (id) => {
+  try {
+    await test_delete_artifact(id);  // 调用删除函数
+    alert('文物删除成功');
+    // 删除成功后更新界面
+
+  } catch (error) {
+    alert(error.message);  // 显示错误消息（如没有登录）
+  }
+};
+
+
+// const loading = ref(true)
+// const svg = `
+//   <path class="path" d="
+//     M 30 15
+//     L 28 17
+//     M 25.61 25.61
+//     A 15 15, 0, 0, 1, 15 30
+//     A 15 15, 0, 1, 1, 27.99 7.5
+//     L 15 15
+//   " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
+// `
+
+
+// 获取文物列表的函数
+const fetchArtifacts = async () => {
+  try {
+    // loading.value = true  // 设置加载状态
+    const response = await get_artifacts();  // 调用获取文物的 API 函数
+    if (response.status === 200) {
+      artifactStore.setArtifactData(response.data.data);  // 使用 Pinia store 更新数据
+      artifacts.value = artifactStore.$state.artifact;  // 更新本地的数据
+    } else {
+      alert('获取文物列表失败');
+    }
+  } catch (error) {
+    console.error('获取文物列表失败:', error);
+    alert('获取文物列表失败');
+  }
+  // finally {
+  //   // loading.value = false  // 结束加载状态
+  //   loadingInstance1.close()
+  // }
+};
+
+// 页面加载时获取文物列表
 onMounted(() => {
-  artifacts.value = useCulturalInfoStore().$state.data
-})
+  // 如果本地缓存没有文物数据，则从 API 加载数据
+  if (artifactStore.$state.artifact.length === 0) {
+    fetchArtifacts();
+  } else {
+    artifacts.value = artifactStore.$state.artifact;  // 从缓存加载数据
+  }
+});
+
+// onMounted(async () => {
+//   // 如果本地缓存已经有文物数据，则直接从缓存加载
+//   if (artifactStore.$state.artifact.length === 0) {
+//     try {
+//       const response = await get_artifacts(); // 你的 API 请求
+//       console.log(response);
+
+//       // 使用 Pinia store 保存数据
+//       artifactStore.setArtifactData(response.data.data);
+
+//       console.log('从 API 获取并保存数据成功');
+//     } catch (error) {
+//       console.error('获取文物详情失败:', error);
+//     }
+//   }
+
+//   artifacts.value=artifactStore.$state.artifact
+// });
+
+
 </script>
 
 <style scoped>

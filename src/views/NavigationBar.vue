@@ -2,7 +2,7 @@
   <!-- 悬浮在顶部的导航栏 -->
   <nav class="navbar">
     <ul>
-      <li><router-link to="/home">首页</router-link></li>
+      <!-- <li><router-link to="/home">首页</router-link></li> -->
       <li><router-link to="/exhibit">文物展示</router-link></li>
       <li><router-link to="/management">文物管理</router-link></li>
       <li><router-link to="/personal">管理员中心</router-link></li>
@@ -11,7 +11,7 @@
   <!-- 显示子路由的组件 -->
   <router-view></router-view>
 
-  <div class="tooltip-container">
+  <div v-if="isAuthenticated" class="tooltip-container">
     <div class="button-content">
       <span class="text">工具</span>
 
@@ -40,7 +40,7 @@
               </svg>
             </a>
 
-            <div class="tooltip">管理员</div>
+            <div class="tooltip">管理员模式</div>
           </li>
         </ul>
 
@@ -62,8 +62,19 @@
 
 <script setup>
 // 可以根据需要在这里添加逻辑
-import { useAdminStore } from '@/stores/useAdminStore' // 引入 Pinia store
+import { useAdminStore, useAuthStore } from '@/stores/useAdminStore' // 引入 Pinia store
 import { useRouter } from 'vue-router'
+import { onMounted,computed } from 'vue'
+// import { useAuthStore } from '@/stores/auth' // 引入 Pinia store
+
+// 获取 store 实例
+const authStore = useAuthStore()
+
+// 判断用户是否已登录
+// const isAuthenticated = authStore.isAuthenticated
+
+const isAuthenticated = computed(() => authStore.isAuthenticated)
+
 
 const router = useRouter()
 
@@ -80,6 +91,15 @@ const addCultural = () => {
     name: 'add',
   })
 }
+
+
+onMounted(async () => {
+  try {
+    console.log('dasda',isAuthenticated)
+  } catch (error) {
+    console.error('获取文物详情失败:', error)
+  }
+})
 </script>
 
 <style scoped>
@@ -569,7 +589,7 @@ ul {
   position: absolute;
   top: -40px;
   left: 50%;
-  width: 60px;
+  width: 70px;
   transform: translateX(-50%);
   color: #050505;
   padding: 6px 10px;

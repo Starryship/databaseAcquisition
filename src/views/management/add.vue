@@ -1,7 +1,9 @@
 <template>
   <div class="back">
     <div class="form-container">
-      <h2 style="text-align: center;margin-bottom: 20px;margin-top: 20px;">添加文物</h2>
+      <h2 style="text-align: center; margin-bottom: 20px; margin-top: 10px">
+        {{ isEdit ? '更新文物信息' : '添加文物' }}
+      </h2>
       <el-form
         ref="ruleFormRef"
         style="max-width: 600px"
@@ -12,9 +14,13 @@
         :size="formSize"
         status-icon
       >
-        <el-form-item label="文物ID" prop="id">
+        <!-- <el-form-item label="文物ID" prop="id">
           <el-input v-model="ruleForm.id" />
+        </el-form-item> -->
+        <el-form-item label="文物ID" prop="id" v-if="isEdit">
+          <el-input v-model="ruleForm.id" disabled />
         </el-form-item>
+
         <el-form-item label="文物名称" prop="name">
           <el-input v-model="ruleForm.name" />
         </el-form-item>
@@ -53,8 +59,10 @@
         </el-form-item>
 
         <el-form-item>
-          <div style="width: 100%;display: flex;justify-content: center;">
-            <el-button type="primary" @click="submitForm(ruleFormRef)"> 提交 </el-button>
+          <div style="width: 100%; display: flex; justify-content: center">
+            <el-button type="primary" @click="submitForm(ruleFormRef)">
+              {{ isEdit ? '更新文物' : '提交' }}
+            </el-button>
             <el-button @click="resetForm(ruleFormRef)">重置</el-button>
           </div>
         </el-form-item>
@@ -64,7 +72,9 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { add_artifact, update_artifact } from '@/api/request'
 
 // Form reference
 const ruleFormRef = ref(null)
@@ -79,6 +89,43 @@ const ruleForm = reactive({
   material: '',
   thumbnail_path: '',
   description: '',
+})
+
+const route = useRoute()
+const router = useRouter()
+// 当前页面是否是编辑页面（有 id 就是编辑，否则是添加）
+const isEdit = ref(false)
+const formTitle = ref('添加文物') // 默认显示添加文物
+
+// 使用 onMounted 获取并填充路由传递的 query 参数
+onMounted(() => {
+  // const{id}=route.params
+
+  //   const {era,location_time, image,name,  parameter ,category, text } = route.query
+  //   ruleForm.id = id || ''
+  //   ruleForm.name = name || ''
+  //   ruleForm.period = era || ''
+  //   ruleForm.category = category || ''
+  //   ruleForm.parameter = parameter || ''
+  //   ruleForm.material = location_time || ''
+  //   ruleForm.description = text || ''
+  //   ruleForm.image = image || ''
+
+  const { id } = route.params
+  if (id) {
+    isEdit.value = true
+    formTitle.value = '更新文物'
+    const { name, period, category, parameter, material, thumbnail_path, description } = route.query
+
+    ruleForm.id = id || ''
+    ruleForm.name = name || ''
+    ruleForm.period = period || ''
+    ruleForm.category = category || ''
+    ruleForm.parameter = parameter || ''
+    ruleForm.material = material || ''
+    ruleForm.description = description || ''
+    ruleForm.thumbnail_path = thumbnail_path || ''
+  }
 })
 
 // Form validation rules
@@ -136,12 +183,19 @@ const rules = reactive({
   ],
 })
 
-// Form submission
 const submitForm = async (formEl) => {
   if (!formEl) return
-  await formEl.validate((valid, fields) => {
+  await formEl.validate(async (valid, fields) => {
     if (valid) {
-      console.log('submit!')
+      if (isEdit.value) {
+        // 更新文物
+        await update_artifact(ruleForm.id, ruleForm)
+      } else {
+        // 添加文物
+        await add_artifact(ruleForm)
+      }
+      // 跳转或显示成功信息
+      router.push('/management')
     } else {
       console.log('error submit!', fields)
     }
@@ -165,13 +219,13 @@ const resetForm = (formEl) => {
 }
 
 .form-container {
-  width: 80%;
+  width: 60%;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 6px;
-  padding-top: 20px;
+  padding-top: 50px;
   background-color: #f4f4f4;
   box-sizing: border-box;
   border-radius: 10px;
@@ -180,12 +234,11 @@ const resetForm = (formEl) => {
 .demo-ruleForm {
   display: flex;
   flex-direction: column;
-  gap:10px;
+  gap: 10px;
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
 }
-
 
 /* .management-container {
   margin: 0px auto;

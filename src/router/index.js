@@ -27,13 +27,32 @@ const router = createRouter({
           component: Detail,
           props: (route) => ({
             id: route.params.id,
-            era: route.query.era,
-            location_time: route.query.location_time,
-            image: route.query.image,
+            // era: route.query.period,
+            // location_time: route.query.location_time,
+            // image: route.query.thumbnail_path,
+            // name: route.query.name,
+            // parameter: route.query.parameter,
+            // category: route.query.category,
+            // text: route.query.description,
+          }),
+        },
+
+
+        {
+          path: '/artifactEdit/:id', // 路径包含文物的 ID
+          name: 'ArtifactEdit',
+          component: Add,
+          props: (route) => ({
+            id: route.params.id,
+
             name: route.query.name,
-            parameter: route.query.parameter,
+            period: route.query.period,
             category: route.query.category,
-            text: route.query.name,
+            parameter: route.query.parameter,
+            material: route.query.material,
+            thumbnail_path: route.query.thumbnail_path,
+            description: route.query.description,
+
           }),
         },
 
