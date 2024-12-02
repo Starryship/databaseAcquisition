@@ -60,14 +60,15 @@
           <li class="icon-content">
             <a @click="analyse" data-social="mana" href="#" class="social-icon fix">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-  <path d="M21 2H3c-1.1 0-1.99.9-1.99 2L1 20c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 18H4V6h16v12z"/>
-</svg>
+                <path
+                  d="M21 2H3c-1.1 0-1.99.9-1.99 2L1 20c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 18H4V6h16v12z"
+                />
+              </svg>
             </a>
 
             <div class="tooltip">数据分析</div>
           </li>
         </ul>
-
       </div>
     </div>
   </div>
@@ -77,17 +78,12 @@
 // 可以根据需要在这里添加逻辑
 import { useAdminStore, useAuthStore } from '@/stores/useAdminStore' // 引入 Pinia store
 import { useRouter } from 'vue-router'
-import { onMounted,computed } from 'vue'
-// import { useAuthStore } from '@/stores/auth' // 引入 Pinia store
+import { onMounted, computed } from 'vue'
 
 // 获取 store 实例
 const authStore = useAuthStore()
 
-// 判断用户是否已登录
-// const isAuthenticated = authStore.isAuthenticated
-
 const isAuthenticated = computed(() => authStore.isAuthenticated)
-
 
 const router = useRouter()
 
@@ -111,10 +107,9 @@ const analyse = () => {
   })
 }
 
-
 onMounted(async () => {
   try {
-    console.log('dasda',isAuthenticated)
+    console.log('dasda', isAuthenticated)
   } catch (error) {
     console.error('获取文物详情失败:', error)
   }
@@ -197,8 +192,6 @@ onMounted(async () => {
   background-color: #0056b3;
 }
 
-/* From Uiverse.io by Mohammad-Rahme-576 */
-/* Container Styles */
 .tooltip-container {
   position: fixed; /* 使容器固定在视口中 */
   bottom: 10%; /* 距离屏幕底部20px */

@@ -1,8 +1,6 @@
 <template>
   <div class="back">
     <div class="management-container">
-      <!-- <h1>文物详情 - ID: {{ id }}</h1> -->
-
       <h1>{{ artifact.name }}</h1>
 
       <div class="content">
@@ -62,18 +60,10 @@
 
 <script setup>
 import { useRoute, useRouter } from 'vue-router' // 导入 useRoute 钩子
-// import { useRoute } from 'vue-router'
-
 import { useAdminStore } from '@/stores/useAdminStore' // 引入 Pinia store
 import { watch, onMounted, ref } from 'vue'
-
 import { computed } from 'vue'
 import { get_artifacts_by_id, get_artidact_location_by_id } from '@/api/request'
-
-// const route = useRoute()
-// const { id } = route.params
-
-// const { era, location_time, image, name, parameter, category, text } = route.query // 获取路由参数
 
 // 使用 Pinia store
 const adminStore = useAdminStore()
@@ -93,16 +83,11 @@ onMounted(async () => {
     // id_.value=id
     console.log(id)
 
-    const response = await get_artifacts_by_id(id) // 使用id获取文物详情数据
-    artifact.value = response.data.data // 假设 API 返回的数据是存放在 `data` 字段中
+    const response = await get_artifacts_by_id(id)
+    artifact.value = response.data.data
 
     const response_location = await get_artidact_location_by_id(id)
     artifact_location.value = response_location.data.data
-    // // 将文物数据存入 Pinia Store
-    // artifactStore.setArtifactData(artifactData)
-
-    // // 将数据存到本地引用变量中
-    // artifact.value = artifactData
   } catch (error) {
     console.error('获取文物详情失败:', error)
     artifact_location.value = {}
@@ -115,9 +100,6 @@ const router = useRouter()
 // 监听 isAdmin 的变化，如果是管理员，自动跳转到文物编辑页面
 watch(isAdmin, (newVal) => {
   if (newVal) {
-    // const route = useRoute()
-    // const { id } = route.params
-    // console.log(id_)
     router.push({
       name: 'ArtifactEdit',
       params: { id: artifact.value.id },
@@ -133,25 +115,6 @@ watch(isAdmin, (newVal) => {
     })
   }
 })
-
-// // 如果 isAdmin 初始为 true，则在组件挂载时直接跳转
-// onMounted(() => {
-//   if (isAdmin.value) {
-//     router.push({
-//     name: 'ArtifactEdit',
-//     params: { id },
-//     query: {
-//       era,
-//       location_time,
-//       image,
-//       name,
-//       parameter,
-//       category,
-//       text,
-//     },
-//   })
-//   }
-// })
 </script>
 
 <style scoped>
@@ -206,10 +169,10 @@ h1 {
 
   margin-bottom: 5%;
 
-  font-family: 'KaiTi', 'STKaiti', serif; /* 设置优雅字体 */
-  font-size: 45px; /* 设置字体大小 */
-  font-weight: bold; /* 设置字体加粗 */
-  color: #4a4a4a; /* 设置字体颜色 */
+  font-family: 'KaiTi', 'STKaiti', serif;
+  font-size: 45px;
+  font-weight: bold;
+  color: #4a4a4a;
 }
 
 .text-container input {
@@ -224,10 +187,9 @@ h1 {
   font-weight: bold;
 }
 .title {
-  /* text-align: center; */
   margin: 10% 2%;
-  font-size: 30px; /* 设置字体大小 */
-  font-weight: bold; /* 设置字体加粗 */
+  font-size: 30px;
+  font-weight: bold;
 }
 
 .info-item {

@@ -14,9 +14,7 @@
         :size="formSize"
         status-icon
       >
-        <!-- <el-form-item label="文物ID" prop="id">
-          <el-input v-model="ruleForm.id" />
-        </el-form-item> -->
+
         <el-form-item label="文物ID" prop="id" v-if="isEdit">
           <el-input v-model="ruleForm.id" disabled />
         </el-form-item>
@@ -99,17 +97,6 @@ const formTitle = ref('添加文物') // 默认显示添加文物
 
 // 使用 onMounted 获取并填充路由传递的 query 参数
 onMounted(() => {
-  // const{id}=route.params
-
-  //   const {era,location_time, image,name,  parameter ,category, text } = route.query
-  //   ruleForm.id = id || ''
-  //   ruleForm.name = name || ''
-  //   ruleForm.period = era || ''
-  //   ruleForm.category = category || ''
-  //   ruleForm.parameter = parameter || ''
-  //   ruleForm.material = location_time || ''
-  //   ruleForm.description = text || ''
-  //   ruleForm.image = image || ''
 
   const { id } = route.params
   if (id) {
@@ -240,12 +227,4 @@ const resetForm = (formEl) => {
   margin: 0 auto;
 }
 
-/* .management-container {
-  margin: 0px auto;
-  width: 80%;
-  height: fit-content;
-  background-color: rgb(248, 244, 238);
-  padding: 120px 40px 50px 40px;
-  margin-bottom: 15%;
-} */
 </style>

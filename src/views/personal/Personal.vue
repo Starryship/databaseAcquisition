@@ -3,8 +3,6 @@
     <form class="form login" @submit.prevent="handleLogin">
       <!-- 退出登录按钮，只有在已登录时显示 -->
       <div v-if="isAuthenticated">
-        <!-- <button class="logout" @click="handleLogout">退出登录</button> -->
-
         <input class="submit" type="submit" @click="handleLogout" value="退出登录" />
       </div>
 
@@ -48,15 +46,9 @@ const handleLogin = async () => {
     if (response.status === 200) {
       // 获取并存储 JWT 令牌
       const accessToken = response.data.access_token
-      // console.log('用户登录成功，JWT:', accessToken)
 
-      // // 可以将令牌存储在 localStorage/sessionStorage 或 Vuex 等地方
-      // localStorage.setItem('access_token', accessToken)
-      // 存储令牌到 store 和 localStorage
       authStore.setAccessToken(accessToken)
 
-      // 登录成功后的其他处理逻辑
-      // alert('登录成功！')
       ElMessage({
         message: '登录成功',
         type: 'success',
@@ -65,10 +57,10 @@ const handleLogin = async () => {
     }
   } catch (error) {
     console.error('登录失败', error)
-    // alert('登录失败，请检查账号和密码，如果没有管理员账号请联系平台开发者')
+
     ElMessage({
-      message:'登录失败，请检查账号和密码，如果没有管理员账号请联系平台开发者',
-      type:'error'
+      message: '登录失败，请检查账号和密码，如果没有管理员账号请联系平台开发者',
+      type: 'error',
     })
   }
 }
@@ -78,16 +70,11 @@ const handleLogout = () => {
   // 清除存储的 JWT 令牌
   authStore.clearAccessToken()
 
-  // 退出登录后的其他处理逻辑
-  // alert('您已成功退出登录')
   ElMessage({
     message: '您已成功退出登录',
-    type:'success',
+    type: 'success',
     customClass: 'el-message-success',
   })
-
-  // 可能需要重定向到登录页
-  // router.push({ name: 'login' })
 }
 </script>
 
@@ -125,7 +112,6 @@ const handleLogout = () => {
   --clr-alpha: #9c9c9c60;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   gap: 2rem;
   width: 100%;
   max-width: 500px;

@@ -11,26 +11,12 @@
       />
     </div>
 
-    <!-- <div class="search">
-      <div class="inputbox">
-        <input required="required" type="text" v-model="name"/>
-        <span>文物名称</span>
-        <i></i>
-        
-      </div>
-      <button @click="searchArtifact">搜索</button>
-    </div> -->
-    
   </div>
 </template>
 
 <script setup>
 import { ref ,onMounted } from 'vue'
 import Checkbox from '@/components/Checkbox.vue'
-
-
-
-
 
 
 // 传世品、革命文物、国史文物、货币、考古发掘品、名族名俗文物、古籍文献、外国文物、艺术品
@@ -73,17 +59,12 @@ const sorts = ref([
   },
 ]);
 
-
-// const searchText = ref('') // 文物名称搜索框内容
-
 // 父组件传递的更新数据函数
 const emit = defineEmits(['categoryChanged'])
 
 // 监听复选框变化
 const handleCheckboxChange = () => {
-  // 过滤选中的类别
-  // const selectedCategories = sorts.value.filter(item => item.isChecked).map(item => item.text);
-    
+
   // 过滤选中的类别
     const selectedCategories = sorts.value
     .filter(item => item.isChecked)
@@ -95,11 +76,6 @@ const handleCheckboxChange = () => {
   emit('categoryChanged',selectedCategories);
 };
 
-// // 监听搜索框的变化（如果需要使用搜索）
-// watch(searchText, (newValue) => {
-//   // 可以在这里添加搜索过滤功能，向父组件传递搜索内容
-//   emitCategoryChange(searchText.value);
-// });
 
 onMounted(() => {
   handleCheckboxChange()
