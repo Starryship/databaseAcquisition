@@ -55,6 +55,19 @@
             <div class="tooltip">添加文物</div>
           </li>
         </ul>
+
+        <ul class="example-2">
+          <li class="icon-content">
+            <a @click="toggleAdminMode" data-social="mana" href="#" class="social-icon fix">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <path d="M21 2H3c-1.1 0-1.99.9-1.99 2L1 20c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 18H4V6h16v12z"/>
+</svg>
+            </a>
+
+            <div class="tooltip">数据分析</div>
+          </li>
+        </ul>
+
       </div>
     </div>
   </div>

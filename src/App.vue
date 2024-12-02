@@ -29,8 +29,14 @@ window.addEventListener('beforeunload', () => {
 
 
 
+</style>
 
-
-
-
+<style>
+.el-message-success {
+  --el-message-text-color: white !important;
+  color: var(--el-message-text-color);
+  /* color: white !important; */
+  background-color: #8c6270 !important;
+  border: 0;
+}
 </style>

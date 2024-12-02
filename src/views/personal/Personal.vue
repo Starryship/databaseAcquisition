@@ -28,6 +28,7 @@ import { ref, computed } from 'vue'
 
 import { login } from '@/api/request' // 导入API请求函数
 import { useAuthStore } from '@/stores/useAdminStore' // 导入 Pinia store
+import { ElMessage } from 'element-plus'
 
 // 表单数据
 const account = ref('')
@@ -47,7 +48,7 @@ const handleLogin = async () => {
     if (response.status === 200) {
       // 获取并存储 JWT 令牌
       const accessToken = response.data.access_token
-      console.log('用户登录成功，JWT:', accessToken)
+      // console.log('用户登录成功，JWT:', accessToken)
 
       // // 可以将令牌存储在 localStorage/sessionStorage 或 Vuex 等地方
       // localStorage.setItem('access_token', accessToken)
@@ -55,11 +56,20 @@ const handleLogin = async () => {
       authStore.setAccessToken(accessToken)
 
       // 登录成功后的其他处理逻辑
-      alert('登录成功！')
+      // alert('登录成功！')
+      ElMessage({
+        message: '登录成功',
+        type: 'success',
+        customClass: 'el-message-success',
+      })
     }
   } catch (error) {
     console.error('登录失败', error)
-    alert('登录失败，请检查账号和密码，如果没有管理员账号请联系平台开发者')
+    // alert('登录失败，请检查账号和密码，如果没有管理员账号请联系平台开发者')
+    ElMessage({
+      message:'登录失败，请检查账号和密码，如果没有管理员账号请联系平台开发者',
+      type:'error'
+    })
   }
 }
 
@@ -69,7 +79,12 @@ const handleLogout = () => {
   authStore.clearAccessToken()
 
   // 退出登录后的其他处理逻辑
-  alert('您已成功退出登录')
+  // alert('您已成功退出登录')
+  ElMessage({
+    message: '您已成功退出登录',
+    type:'success',
+    customClass: 'el-message-success',
+  })
 
   // 可能需要重定向到登录页
   // router.push({ name: 'login' })
@@ -117,43 +132,6 @@ const handleLogout = () => {
   padding: 40px 100px;
 }
 
-/* .form {
---bg-light: #efefef;
---bg-dark: #707070;
---clr: #58bc82;
---clr-alpha: #9c9c9c60;
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 2rem;
-width: 100%;
-max-width: 400px;
-} */
-
-/* .form .input-span {
-width: 100%;
-display: flex;
-flex-direction: column;
-gap: 0.5rem;
-}
-
-.form input[type='text'],
-.form input[type='password'] {
-border-radius: 0.5rem;
-padding: 1rem 0.75rem;
-border: none;
-display: flex;
-align-items: center;
-gap: 0.5rem;
-background-color: #d5d5d560;
-outline: 2px solid grey;
-}
-
-.form input[type='text']:focus,
-.form input[type='password']:focus {
-outline: 2px solid #5b2528;
-} */
-
 .input-span {
   width: 100%;
   display: flex;
@@ -186,19 +164,6 @@ outline: 2px solid #5b2528;
   font-weight: 600;
 }
 
-/* .form .submit {
-padding: 1rem 0.75rem;
-width: 88%;
-border-radius: 3rem;
-background-color: #5b2528;
-color: var(--bg-light);
-border: none;
-cursor: pointer;
-transition: all 300ms;
-font-weight: 600;
-font-size: 0.9rem;
-} */
-
 .submit {
   padding: 1rem 0.75rem;
   width: 100%;
@@ -226,11 +191,6 @@ font-size: 0.9rem;
   font-weight: 600;
   font-size: 0.9rem;
 }
-
-/* .form .submit:hover {
-background-color: #8d6371;
-color: white;
-} */
 
 .submit:hover {
   background-color: #8d6371;
