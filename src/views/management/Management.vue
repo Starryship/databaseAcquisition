@@ -86,7 +86,7 @@
       </div>
 
 
-      <div class="collect">
+      <div class="collect" v-loading="loading">
         <table>
           <colgroup>
             <!-- 设置每列宽度 -->
@@ -277,7 +277,7 @@ const handleDelete = async (id) => {
 //   " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
 // `
 
-
+const loading=ref(true)
 // 获取文物列表的函数
 const fetchArtifacts = async () => {
   try {
@@ -293,10 +293,10 @@ const fetchArtifacts = async () => {
     console.error('获取文物列表失败:', error);
     alert('获取文物列表失败');
   }
-  // finally {
-  //   // loading.value = false  // 结束加载状态
-  //   loadingInstance1.close()
-  // }
+  finally {
+    loading.value = false  // 结束加载状态
+    // loadingInstance1.close()
+  }
 };
 
 // 页面加载时获取文物列表
@@ -306,6 +306,7 @@ onMounted(() => {
     fetchArtifacts();
   } else {
     artifacts.value = artifactStore.$state.artifact;  // 从缓存加载数据
+    loading.value = false  
   }
 });
 
