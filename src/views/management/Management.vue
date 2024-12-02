@@ -159,7 +159,7 @@ import { useAdminStore } from '@/stores/useAdminStore' // 引入 Pinia store
 // import { watch } from 'vue';
 import { computed } from 'vue'
 import { useArtifactStore } from '@/stores/artifactStore'; // 引入 Pinia store
-import { get_artifacts,test_delete_artifact } from '@/api/request' // 导入API请求函数
+import { get_artifacts,test_delete_artifact,add_user_interaction } from '@/api/request' // 导入API请求函数
 
 
 const artifactStore = useArtifactStore();
@@ -174,33 +174,34 @@ const router = useRouter()
 
 const artifacts = ref([])
 
+
+
 // const handleAction = (id_) => {
-//   const artifact = artifacts.value.find((item) => item.id === id_)
-//   const { id, period, location_time, thumbnail_path, name, parameter, category, description } = artifact
+
 
 //   router.push({
 //     name: 'ArtifactDetail',
-//     params: { id },
-//     query: {
-//       period,
-//       location_time,
-//       thumbnail_path,
-//       name,
-//       parameter,
-//       category,
-//       description,
-//     },
+//     params: { id: id_ },
 //   })
 // }
 
-
-const handleAction = (id_) => {
-  router.push({
-    name: 'ArtifactDetail',
-    params: { id: id_ },
-  })
-}
-
+// handleAction 方法会在点击按钮时触发
+const handleAction = async (id_) => {
+  try {
+    // 先记录用户的交互行为
+    await add_user_interaction(id_, 'view'); // 'view' 表示查看交互类型
+    
+    // 然后跳转到文物详情页面
+    router.push({
+      name: 'ArtifactDetail',
+      params: { id: id_ },
+    });
+    
+    console.log(`交互记录已添加，文物 ID: ${id_}`);
+  } catch (error) {
+    console.error('添加交互记录失败:', error.message);
+  }
+};
 
 
 // 筛选的类别

@@ -164,3 +164,29 @@ export const login = (account, password) => {
     password: password
   })
 }
+
+
+
+// 添加用户交互记录
+export const add_user_interaction = (artifactId, interactionType='view') => {
+  // 获取当前存储的 token（例如从 localStorage 或 Pinia store）
+  const accessToken = localStorage.getItem('access_token');  // 或者使用 Pinia store 获取 token
+
+  if (!accessToken) {
+    // 如果没有 token，提示用户登录
+    return Promise.reject(new Error('请先登录'));
+  }
+
+  // 请求数据
+  const interactionData = {
+    artifact_id: artifactId,
+    interaction_type: interactionType,  // 交互类型，如 'view'
+  };
+
+  // 发送 POST 请求并携带 Authorization header
+  return axiosInstance.post('/api/interactions', interactionData, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,  // 将 token 加入请求头
+    },
+  });
+};

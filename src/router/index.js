@@ -6,7 +6,7 @@ import Management from '@/views/management/Management.vue'
 import Personal from '@/views/personal/Personal.vue'
 import Detail from '@/views/management/Detail.vue'
 import Add from '@/views/management/add.vue'
-
+import Analyse from '@/views/management/Analyse.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -56,7 +56,10 @@ const router = createRouter({
           }),
         },
 
+
+        
         { path: '/add', name:'add',component: Add },
+        { path: '/analyse', name:'analyse',component: Analyse },
 
 
 
