@@ -35,7 +35,7 @@
             <el-option label="国史文物" value="国史文物" />
             <el-option label="货币" value="货币" />
             <el-option label="考古发掘品" value="考古发掘品" />
-            <el-option label="名族名俗文物" value="名族名俗文物" />
+            <el-option label="民族民俗文物" value="民族民俗文物" />
             <el-option label="古籍文献" value="古籍文献" />
             <el-option label="外国文物" value="外国文物" />
             <el-option label="艺术品" value="艺术品" />

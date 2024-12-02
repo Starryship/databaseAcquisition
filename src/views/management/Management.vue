@@ -68,7 +68,7 @@
                     <option value="国史文物">国史文物</option>
                     <option value="货币">货币</option>
                     <option value="考古发掘品">考古发掘品</option>
-                    <option value="名族名俗文物">名族名俗文物</option>
+                    <option value="民族民俗文物">民族民俗文物</option>
                     <option value="古籍文献">古籍文献</option>
                     <option value="外国文物">外国文物</option>
                     <option value="艺术品">艺术品</option>
@@ -190,16 +190,16 @@ const handleAction = async (id_) => {
   try {
     // 先记录用户的交互行为
     await add_user_interaction(id_, 'view'); // 'view' 表示查看交互类型
-    
-    // 然后跳转到文物详情页面
-    router.push({
-      name: 'ArtifactDetail',
-      params: { id: id_ },
-    });
-    
+  
     console.log(`交互记录已添加，文物 ID: ${id_}`);
   } catch (error) {
     console.error('添加交互记录失败:', error.message);
+  }finally{
+        // 然后跳转到文物详情页面
+        router.push({
+      name: 'ArtifactDetail',
+      params: { id: id_ },
+    });
   }
 };
 

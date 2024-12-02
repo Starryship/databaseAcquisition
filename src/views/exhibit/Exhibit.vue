@@ -48,9 +48,11 @@ onMounted(()=>{
     <Filter @categoryChanged="fetchArtifactsByCategories" style="margin-bottom: 20px"></Filter>
 
     <div class="gallery" v-if="images.length">
-      <div v-for="item in images" :key="item.id" class="image-item">
-        <img :src="item.image" :alt="`Image ${item.name}`" />
+      <div v-for="item in images" :key="item.id" class="image-item"  @click="handleAction(item.id)">
+        
+        <img :src="item.thumbnail_path" :alt="`Image ${item.name}`" />
         <div class="image-name">{{ item.name }}</div>
+        <div class="category">[{{ item.category }}]</div>
       </div>
     </div>
     <div v-else>
@@ -60,10 +62,18 @@ onMounted(()=>{
 </template>
 
 <script setup>
-import { ref } from 'vue'
+// import { ref } from 'vue'
 import Filter from './Filter.vue'
 import { get_artifact_by_category } from '@/api/request'
+import { ref } from 'vue'
 
+import { useRouter } from 'vue-router'
+
+import { add_user_interaction } from '@/api/request' // 导入API请求函数
+
+
+
+const router = useRouter()
 const images = ref([])
 
 
@@ -88,6 +98,26 @@ const fetchArtifactsByCategories = async (categories) => {
     }
   }
 }
+
+
+// handleAction 方法会在点击按钮时触发
+const handleAction = async (id_) => {
+  try {
+    // 先记录用户的交互行为
+    await add_user_interaction(id_, 'view'); // 'view' 表示查看交互类型
+  
+    console.log(`交互记录已添加，文物 ID: ${id_}`);
+  } catch (error) {
+    console.error('添加交互记录失败:', error.message);
+  }finally{
+        // 然后跳转到文物详情页面
+        router.push({
+      name: 'ArtifactDetail',
+      params: { id: id_ },
+    });
+  }
+};
+
 </script>
 
 
@@ -117,6 +147,7 @@ const fetchArtifactsByCategories = async (categories) => {
   padding: 20px;
   border-radius: 5px;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .image-item img {
@@ -126,7 +157,13 @@ const fetchArtifactsByCategories = async (categories) => {
 
 .image-name{
   margin-top: 10px;
-  font-size: 20px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.category{
+  color: gray;
+  font-size: 10px;
   font-weight: bold;
 }
 </style>

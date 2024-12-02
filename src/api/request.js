@@ -144,7 +144,7 @@ export const update_artifact = (id, artifactData) => {
 //根据类别获取
 export const get_artifact_by_category = async (category_query, limit = 10) => {
   try {
-    const response = axiosInstance.get(`/api/artifacts/category`, {
+    const response = await axiosInstance.get(`/api/artifacts/category`, {
       params: {
         category: category_query,
         limit,
@@ -158,12 +158,29 @@ export const get_artifact_by_category = async (category_query, limit = 10) => {
 };
 
 
+// 按文物类别统计数量
+export const get_artifacts_count_by_category = async () => {
+  try {
+    // 发起 GET 请求
+    const response = await axiosInstance.get('/api/artifacts/category/count');
+
+    // 返回响应数据
+    return response.data; 
+  } catch (error) {
+    console.error("Error fetching artifacts count by category:", error);
+    throw error; // 如果发生错误，抛出异常
+  }
+};
+
+
 export const login = (account, password) => {
   return axiosInstance.post('/api/users/login', {
     phone: account,
     password: password
   })
 }
+
+
 
 
 
@@ -189,4 +206,32 @@ export const add_user_interaction = (artifactId, interactionType='view') => {
       Authorization: `Bearer ${accessToken}`,  // 将 token 加入请求头
     },
   });
+};
+
+
+// 获取每个文物的交互次数
+export const get_artifact_interaction_counts = async (limit = 10) => {
+  try {
+    const response = await axiosInstance.get('/api/interactions/count', {
+      params: {
+        limit,  // 设置请求的 limit 参数
+      },
+    });
+    return response.data; // 返回数据
+  } catch (error) {
+    console.error("Error fetching artifact interaction counts:", error);
+    throw error;
+  }
+};
+
+
+// 根据文物类别获取交互数量统计
+export const get_interactions_count_by_category = async () => {
+  try {
+    const response = await axiosInstance.get('/api/interactions/category/interactions_count');
+    return response.data;  // 返回文物类别交互数量统计的数据
+  } catch (error) {
+    console.error("Error fetching interactions count by category:", error);
+    throw error;  // 抛出错误，供上层处理
+  }
 };

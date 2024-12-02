@@ -11,57 +11,65 @@
       />
     </div>
 
-    <div class="search">
+    <!-- <div class="search">
       <div class="inputbox">
-        <input required="required" type="text" />
+        <input required="required" type="text" v-model="name"/>
         <span>文物名称</span>
         <i></i>
+        
       </div>
-    </div>
+      <button @click="searchArtifact">搜索</button>
+    </div> -->
+    
   </div>
 </template>
 
 <script setup>
-import { ref  } from 'vue'
+import { ref ,onMounted } from 'vue'
 import Checkbox from '@/components/Checkbox.vue'
+
+
+
+
+
 
 // 传世品、革命文物、国史文物、货币、考古发掘品、名族名俗文物、古籍文献、外国文物、艺术品
 const sorts = ref([
   {
     text: '传世品',
-    isChecked: false,
+    isChecked: true,
   },
   {
     text: '货币',
-    isChecked: false,
+    isChecked: true,
   },
   {
     text: '艺术品',
-    isChecked: false,
+    isChecked: true,
   },
   {
     text: '革命文物',
-    isChecked: false,
+    isChecked: true,
   },
   {
     text: '国史文物',
-    isChecked: false,
+    isChecked: true,
   },
   {
     text: '考古发掘品',
-    isChecked: false,
+    isChecked: true,
   },
   {
-    text: '名族名俗文物',
-    isChecked: false,
+    text: '民族民俗文物',
+    isChecked: true,
   },
   {
     text: '古籍文献',
-    isChecked: false,
+    isChecked: true,
   },
   {
     text: '外国文物',
-    isChecked: false,
+    isChecked: true,
   },
 ]);
 
@@ -69,7 +77,7 @@ const sorts = ref([
 // const searchText = ref('') // 文物名称搜索框内容
 
 // 父组件传递的更新数据函数
-const emitCategoryChange = defineEmits(['categoryChanged'])
+const emit = defineEmits(['categoryChanged'])
 
 // 监听复选框变化
 const handleCheckboxChange = () => {
@@ -84,7 +92,7 @@ const handleCheckboxChange = () => {
 
 
   // 发送选中的类别给父组件
-  emitCategoryChange(selectedCategories);
+  emit('categoryChanged',selectedCategories);
 };
 
 // // 监听搜索框的变化（如果需要使用搜索）
@@ -92,6 +100,10 @@ const handleCheckboxChange = () => {
 //   // 可以在这里添加搜索过滤功能，向父组件传递搜索内容
 //   emitCategoryChange(searchText.value);
 // });
+
+onMounted(() => {
+  handleCheckboxChange()
+});
 
 </script>
 
