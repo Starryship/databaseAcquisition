@@ -14,7 +14,6 @@
         :size="formSize"
         status-icon
       >
-
         <el-form-item label="文物ID" prop="id" v-if="isEdit">
           <el-input v-model="ruleForm.id" disabled />
         </el-form-item>
@@ -62,6 +61,8 @@
               {{ isEdit ? '更新文物' : '提交' }}
             </el-button>
             <el-button @click="resetForm(ruleFormRef)">重置</el-button>
+
+            <el-button v-if="isEdit" @click="handleDelete(ruleForm.id)"> 删除文物 </el-button>
           </div>
         </el-form-item>
       </el-form>
@@ -72,7 +73,16 @@
 <script setup>
 import { reactive, ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { add_artifact, update_artifact } from '@/api/request'
+import { useArtifactStore } from '@/stores/artifactStore'
+import { add_artifact, update_artifact, test_delete_artifact,get_artifacts } from '@/api/request'
+
+const artifactStore = useArtifactStore()
+// import { useAdminStore } from '@/stores/useAdminStore'
+
+// const adminStore = useAdminStore()
+
+// // 获取管理员模式状态
+// const isAdmin = computed(() => adminStore.isAdmin)
 
 // Form reference
 const ruleFormRef = ref(null)
@@ -89,6 +99,16 @@ const ruleForm = reactive({
   description: '',
 })
 
+const handleDelete = async (id) => {
+  try {
+    await test_delete_artifact(id) // 调用删除函数
+    alert('文物删除成功')
+    // 删除成功后更新界面
+  } catch (error) {
+    alert(error.message) // 显示错误消息（如没有登录）
+  }
+}
+
 const route = useRoute()
 const router = useRouter()
 // 当前页面是否是编辑页面（有 id 就是编辑，否则是添加）
@@ -97,7 +117,6 @@ const formTitle = ref('添加文物') // 默认显示添加文物
 
 // 使用 onMounted 获取并填充路由传递的 query 参数
 onMounted(() => {
-
   const { id } = route.params
   if (id) {
     isEdit.value = true
@@ -170,6 +189,24 @@ const rules = reactive({
   ],
 })
 
+const fetchArtifacts = async () => {
+  try {
+
+
+
+    // loading.value = true  // 设置加载状态
+    const response = await get_artifacts() // 调用获取文物的 API 函数
+
+
+    artifactStore.setArtifactData(response.data) // 使用 Pinia store 更新数据
+
+  } catch (error) {
+    console.error('获取文物列表失败:', error)
+    alert('获取文物列表失败')
+  } 
+}
+
+
 const submitForm = async (formEl) => {
   if (!formEl) return
   await formEl.validate(async (valid, fields) => {
@@ -177,9 +214,11 @@ const submitForm = async (formEl) => {
       if (isEdit.value) {
         // 更新文物
         await update_artifact(ruleForm.id, ruleForm)
+        fetchArtifacts()
       } else {
         // 添加文物
         await add_artifact(ruleForm)
+        fetchArtifacts()
       }
       // 跳转或显示成功信息
       router.push('/management')
@@ -226,5 +265,4 @@ const resetForm = (formEl) => {
   max-width: 500px;
   margin: 0 auto;
 }
-
 </style>

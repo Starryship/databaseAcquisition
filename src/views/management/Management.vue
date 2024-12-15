@@ -142,7 +142,7 @@ import { onMounted, ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAdminStore } from '@/stores/useAdminStore'
 import { useArtifactStore } from '@/stores/artifactStore'
-import { get_artifacts, test_delete_artifact, add_user_interaction } from '@/api/request'
+import { get_artifacts, test_delete_artifact, add_user_interaction ,get_artifact_by_name} from '@/api/request'
 
 const artifactStore = useArtifactStore()
 
@@ -175,30 +175,42 @@ const handleAction = async (id_) => {
 
 // 筛选的类别
 const selectedCategory = ref('')
+// const search=ref(false)
+
 
 // 过滤后的文物列表（根据筛选条件）
 const filteredArtifacts = computed(() => {
+
   return selectedCategory.value
     ? artifacts.value.filter((item) => item.category === selectedCategory.value)
     : artifacts.value
+
+
 })
 
 const searchQuery = ref('')
 
-const handleSearch = () => {
+const handleSearch = async() => {
+
   if (searchQuery.value.trim()) {
     // 判断输入的是ID还是名称
     const searchTerm = searchQuery.value.trim()
     if (isNaN(searchTerm)) {
       // 如果是名称，则搜索文物名称（假设名称唯一）
 
-      const artifact = artifacts.value.find((item) => item.name === searchTerm)
-      const id = artifact.id
+      
+      // const artifact = artifacts.value.find((item) => item.name === searchTerm)
+      // const id = artifact.id
+
+      const search = await get_artifact_by_name(searchTerm)
 
       router.push({
         name: 'ArtifactDetail',
-        params: { id: id },
+        params: { id: search.data[0].id },
       })
+
+
+
     } else {
       // 如果是ID，直接根据ID跳转
 
@@ -231,12 +243,20 @@ const fetchArtifacts = async () => {
   try {
     // loading.value = true  // 设置加载状态
     const response = await get_artifacts() // 调用获取文物的 API 函数
-    if (response.status === 200) {
-      artifactStore.setArtifactData(response.data.data) // 使用 Pinia store 更新数据
-      artifacts.value = artifactStore.$state.artifact // 更新本地的数据
-    } else {
-      alert('获取文物列表失败')
-    }
+
+    console.log(response)
+    // if (response.status === 200) {
+    //   artifactStore.setArtifactData(response.data.data) // 使用 Pinia store 更新数据
+    //   artifacts.value = artifactStore.$state.artifact // 更新本地的数据
+    // } else {
+    //   alert('获取文物列表失败')
+    // }
+
+    // artifactStore.setArtifactData(response.data) // 获取部分
+    artifactStore.setArtifactData(response.data.data) // 获取全部
+    artifacts.value = artifactStore.$state.artifact // 更新本地的数据
+
+
   } catch (error) {
     console.error('获取文物列表失败:', error)
     alert('获取文物列表失败')
@@ -254,6 +274,7 @@ onMounted(() => {
     artifacts.value = artifactStore.$state.artifact // 从缓存加载数据
     loading.value = false
   }
+  // fetchArtifacts()
 })
 </script>
 

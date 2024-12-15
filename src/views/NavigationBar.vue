@@ -1,8 +1,10 @@
 <template>
+
+  
   <!-- 悬浮在顶部的导航栏 -->
   <nav class="navbar">
     <ul>
-      <!-- <li><router-link to="/home">首页</router-link></li> -->
+      <li><router-link to="/home">首页</router-link></li>
       <li><router-link to="/exhibit">文物展示</router-link></li>
       <li><router-link to="/management">文物管理</router-link></li>
       <li><router-link to="/personal">管理员中心</router-link></li>

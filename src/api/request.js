@@ -2,48 +2,49 @@ import axios from 'axios';
 
 const axiosInstance = axios.create({
   baseURL: 'http://123.249.42.133:80', //后端地址
-  timeout: 100000,
+  timeout: 1000000,
   // headers: {
   //   'Content-Type': 'application/json',//应该不会用到其他的
   // },
 });
 
-
-
-
-// // 请求拦截器
-// axiosInstance.interceptors.request.use(
-//   (config) => {
-//     // 在请求头加入 token
-//     const token = localStorage.getItem('token');
-//     if (token) {
-//       config.headers.Authorization = `Bearer ${token}`;
-//     }
-//     return config;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   }
-// );
-
-// // 响应拦截器
-// axiosInstance.interceptors.response.use(
-//   (response) => {
-//     return response.data;
-//   },
-//   (error) => {
-//     //如果有其他统一的错误处理再写
-//     return Promise.reject(error);
-//   }
-// );
-
-// export default axiosInstance;
-
-
+// // //获取全部
 export const get_artifacts = () => {
 
   return axiosInstance.get(`/api/artifacts`)
 }
+
+//获取部分
+// export const get_artifacts = async (limit = 100) => {
+//   try {
+//     const response = await axiosInstance.get(`/api/artifacts`, {
+//       params: {
+//         limit,
+//       }
+//     });
+//     return response.data; // 返回文物数据
+//   } catch (error) {
+//     console.error("Error fetching artifacts:", error);
+//     throw error;
+//   }
+// };
+
+
+//首页轮播图
+export const get_artifacts2 = async (limit = 20) => {
+  try {
+    const response = await axiosInstance.get(`/api/artifacts`, {
+      params: {
+        limit,
+      }
+    });
+    return response.data; // 返回文物数据
+  } catch (error) {
+    console.error("Error fetching artifacts:", error);
+    throw error;
+  }
+};
+
 
 
 // 根据 id 获取文物数据
@@ -51,6 +52,10 @@ export const get_artifacts_by_id = (id) => {
   return axiosInstance.get(`/api/artifacts/${id}`)
 }
 
+
+export const get_artifact_story_by_id = (id) => {
+  return axiosInstance.get(`/api/ai_story/${id}`)
+}
 
 export const get_artidact_location_by_id = (id) => {
   return axiosInstance.get(`/api/artifact_locations/${id}`)
@@ -233,5 +238,64 @@ export const get_interactions_count_by_category = async () => {
   } catch (error) {
     console.error("Error fetching interactions count by category:", error);
     throw error;  // 抛出错误，供上层处理
+  }
+};
+
+
+//根据类别获取
+export const get_artifact_by_name = async (name, limit = 1) => {
+  try {
+    const response = await axiosInstance.get(`/api/artifacts/search`, {
+      params: {
+        name: name,
+        limit,
+      }
+    });
+    return response.data; // 返回文物数据
+  } catch (error) {
+    console.error("Error fetching artifacts:", error);
+    throw error;
+  }
+};
+
+
+
+//ai语音
+export const generateAudio = async (text) => {
+  try {
+    const response = await axiosInstance.post('/api/tts', {
+      text: text, // 传递需要转换为语音的文本
+    });
+    return response.data.audio_url; // 返回音频的URL
+  } catch (error) {
+    console.error("Error generating audio:", error);
+    throw error; // 抛出错误，便于外部捕获
+  }
+};
+
+
+// AI视频
+export const generateVideo = async (imageUrl) => {
+  try {
+    // 构建查询参数
+    const params = {
+      url: imageUrl
+    };
+
+    // 发送 GET 请求
+    const response = await axiosInstance.get('/api/ai_video', { params });
+
+    // 检查响应状态
+    if (response.status === 200) {
+      console.log('生成视频测试通过');
+      console.log(response.data); // 输出返回的 JSON 数据
+      return response.data; // 返回视频生成的相关信息
+    } else {
+      console.error(`生成视频信息失败，状态码：${response.status}, 响应内容：${response.data}`);
+      throw new Error(`生成视频信息失败，状态码：${response.status}`);
+    }
+  } catch (error) {
+    console.error('请求错误:', error);
+    throw error; // 抛出错误，便于外部捕获
   }
 };
